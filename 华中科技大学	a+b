@@ -1,0 +1,13 @@
+//https://www.nowcoder.com/practice/dae9959d6df7466d9a1f6d70d6a11417?tpId=40&tqId=21558&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+    int a, b;
+    while (scanf("%d%d", &a, &b) != EOF) {
+        printf("%d\n", a+b);
+    }
+    return 0;
+}

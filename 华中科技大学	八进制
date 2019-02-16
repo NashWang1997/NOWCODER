@@ -1,0 +1,27 @@
+//https://www.nowcoder.com/practice/eda051c1effc4dffa630bc8507f0c5f7?tpId=40&tqId=21562&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <cstdlib>
+#include <stack>
+using namespace std;
+
+int main()
+{
+	int N;
+	while (scanf("%d", &N) != EOF) {
+		stack <int> number;
+		int rest = N % 8, tmp = N / 8;
+		number.push(rest);
+		while (tmp > 0) {
+			rest = tmp % 8;
+			tmp = tmp / 8;
+			number.push(rest);
+		}
+		while (!number.empty()) {
+			int result = number.top();
+			number.pop();
+			printf("%d", result);
+		}
+		printf("\n");
+	}
+	return 0;
+}

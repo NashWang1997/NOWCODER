@@ -1,0 +1,25 @@
+//https://www.nowcoder.com/practice/04c8a5ea209d41798d23b59f053fa4d6?tpId=40&tqId=21334&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+    int N;
+    while (scanf("%d", &N) != EOF) {
+        int i;
+        long j, Num;
+        for (i=0; i<N; ++i) {
+            scanf("%ld", &Num);
+            int cnt = 0;
+            for (j=1; j*j<=Num; ++j) {
+                long rest = Num % j, tmp = Num / j;
+                if (rest==0 && tmp>j) cnt += 2;
+                if (rest==0 && tmp==j) cnt++;
+                if (tmp < j) break;
+            }
+            printf("%d\n", cnt);
+        }
+    }
+    return 0;
+}

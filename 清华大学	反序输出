@@ -1,0 +1,19 @@
+//https://www.nowcoder.com/practice/171278d170c64d998ab342b3b40171bb?tpId=40&tqId=21336&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+    char input[4];
+    while (scanf("%s", &input) != EOF) {
+        char output[5];
+        for (int i=0; i<4; ++i) {
+            output[i] = input[3-i];
+            //printf("%c\n", input[i]);
+        }
+        output[4] = '\0';
+        printf("%s", output);
+    }
+    return 0;
+}

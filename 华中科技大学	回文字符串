@@ -1,0 +1,23 @@
+//https://www.nowcoder.com/practice/df00c27320b24278b9c25f6bb1e2f3b8?tpId=40&tqId=21559&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string data;
+    while (cin >> data) {
+        int len = data.length();
+        int i;
+        bool flag = true;
+        for (i=0; i<len/2; ++i) {
+            if (data[i] != data[len-i-1]) {
+                cout << "No!" << endl;
+                flag = false;
+                break;
+            }
+        }
+        if (flag) cout << "Yes!" << endl;
+    }
+    return 0;
+}

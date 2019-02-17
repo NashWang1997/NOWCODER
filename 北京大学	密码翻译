@@ -1,0 +1,25 @@
+//https://www.nowcoder.com/practice/136de4a719954361a8e9e41c8c4ad855?tpId=40&tqId=21364&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char input[80];
+    while (cin.getline(input, 80)) {
+        char output[80];
+        int i;
+        for (i=0; input[i]!='\0'; ++i) {
+            if (input[i] == 'z') output[i] = 'a';
+            else if (input[i] == 'Z') output[i] = 'A';
+            else if ((input[i]>='a'&&input[i]<='y') || (input[i]>='A'&&input[i]<='Y')) {
+                output[i] = char(input[i]+1);
+            }
+            else {
+                output[i] = input[i];
+            }
+        }
+        output[i] = '\0';
+        cout << output << endl;
+    }
+    return 0;
+}

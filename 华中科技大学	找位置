@@ -1,0 +1,43 @@
+//https://www.nowcoder.com/practice/e3b2cc44aa9b4851bdca89dd79c53150?tpId=40&tqId=21560&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main()
+{
+    char data[100];
+    while (cin.getline(data, 100)) {
+        int flag[100];
+        int i, j;
+        char tmp;
+        for (i=0; i<100; ++i) flag[i] = 1;
+        for (i=0; data[i]!='\0'; ++i) {
+            if (flag[i] == 1) {
+                tmp = data[i];
+                queue <int> place;
+                flag[i] = 0;
+                place.push(i);
+                for (j=i+1; data[j]!='\0'; ++j) {
+                    if (data[j] == tmp) {
+                        place.push(j);
+                        flag[j] = 0;
+                    }
+                }
+                if (place.size() > 1) {
+                    int p = place.front();
+                    place.pop();
+                    while (place.size() > 0) {
+                        cout << tmp << ':' << p << ',';
+                        p = place.front();
+                        place.pop();
+                    }
+                    cout << tmp << ':' << p << endl;
+                }
+                else {
+                    while (place.size() > 0) place.pop();
+                }
+            }
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,18 @@
+//https://www.nowcoder.com/practice/82e5ff335eeb486aab359767895cc7b4?tpId=40&tqId=21344&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        int m = 1000000, M = -1000000, i, tmp;
+        for (i=0; i<N; ++i) {
+            cin >> tmp;
+            if (tmp < m) m = tmp;
+            if (tmp > M) M = tmp;
+        }
+        cout << M << ' ' << m << endl;
+    }
+    return 0;
+}

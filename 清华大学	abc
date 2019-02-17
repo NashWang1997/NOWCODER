@@ -1,0 +1,24 @@
+//https://www.nowcoder.com/practice/912b15e237ef44148e44018d7b8750b6?tpId=40&tqId=21346&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a[9], b[9], c[2], i;
+    for (i=1; i<10; ++i) {
+        a[i] = i; b[i] = i;
+    }
+    c[0] = 1; c[1] = 6;
+    
+    int j, k;
+    for (i=0; i<9; ++i) {
+        for (j=0; j<9; ++j) {
+            for (k=0; k<2; ++k) {
+                int abc = a[i]*100 + b[j]*10 + c[k], bcc = b[j]*100 + c[k]*10 + c[k];
+                if (abc+bcc == 532)
+                    cout << a[i] << ' ' << b[j] << ' ' << c[k] << endl;
+            }
+        }
+    }
+    return 0;
+}

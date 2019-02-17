@@ -1,0 +1,17 @@
+//https://www.nowcoder.com/practice/97be22ee50b14cccad2787998ca628c8?tpId=40&tqId=21348&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    long n, i;
+    long pro[21];
+    pro[1] = 1;
+    for (i=2; i<21; ++i) {
+        pro[i] = pro[i-1] * i;
+    }
+    while (cin >> n) {
+        cout << pro[n] << endl;
+    }
+    return 0;
+}

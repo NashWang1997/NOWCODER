@@ -1,0 +1,17 @@
+//https://www.nowcoder.com/practice/c978e3375b404d598f1808e4f89ac551?tpId=40&tqId=21557&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N, i;
+    int result[90];
+    result[0] = 1; result[1] = 1;
+    for (i=2; i<90; ++i) {
+        result[i] = result[i-2] + result[i-1];
+    }
+    while (cin >> N) {
+        cout << result[N] << endl;
+    }
+    return 0;
+}

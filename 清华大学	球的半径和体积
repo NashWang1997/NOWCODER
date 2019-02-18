@@ -1,0 +1,16 @@
+//https://www.nowcoder.com/practice/4b733a850c364c32b368555c8c2ec96b?tpId=40&tqId=21341&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <cstdlib>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+    double x0, y0, z0, x1, y1, z1;
+    while (cin >> x0 >> y0 >> z0 >> x1 >> y1 >> z1) {
+        double r2 = pow(x0-x1,2)+pow(y0-y1,2)+pow(z0-z1,2);
+        double v = 4.0 * pow(r2,1.5) / 3 * acos(-1);
+        printf("%0.3f %0.3f\n", sqrt(r2), v);
+    }
+    return 0;
+}

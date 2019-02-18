@@ -1,0 +1,57 @@
+//https://www.nowcoder.com/practice/b744af632ac4499aa485d7bb048bb0aa?tpId=40&tqId=21556&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Data {
+    string number;
+};
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        int i;
+        Data data[N];
+        for (i=0; i<N; ++i) {
+            cin >> data[i].number;
+        }
+        int j;
+        bool flag = true;
+        for (i=0; i<N-1; ++i) {
+            flag = false;
+            for (j=N-1; j>i; --j) {
+                if (data[j].number.length() < data[j-1].number.length()) {
+                    string tmp = data[j].number;
+                    data[j].number = data[j-1].number;
+                    data[j-1].number = tmp;
+                    flag = true;
+                }
+                else if (data[j].number.length() == data[j-1].number.length()) {
+                    int k = 0;
+                    bool flag1 = false;
+                    for (k=0; k<data[j].number.length(); ++k) {
+                        if (int(data[j].number[k]) < int(data[j-1].number[k])) {
+                            flag1 = true;
+                            break;
+                        }
+                        if (int(data[j].number[k]) > int(data[j-1].number[k])) {
+                            flag1 = false;
+                            break;
+                        }
+                    }
+                    if (flag1) {
+                        string tmp = data[j].number;
+                        data[j].number = data[j-1].number;
+                        data[j-1].number = tmp;
+                        flag = true;
+                    }
+                }
+            }
+            if (flag == false) break;
+        }
+        for (i=0; i<N; ++i) {
+            cout << data[i].number << endl;
+        }
+    }
+    return 0;
+}

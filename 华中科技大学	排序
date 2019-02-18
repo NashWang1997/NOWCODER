@@ -1,0 +1,32 @@
+//https://www.nowcoder.com/practice/508f66c6c93d4191ab25151066cb50ef?tpId=40&tqId=21542&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+    while (cin >> n) {
+        int data[n];
+        int i, j;
+        for (i=0; i<n; ++i) {
+            cin >> data[i];
+        }
+        bool flag = true;
+        for (i=0; i<n-1; ++i) {
+            flag = false;
+            for (j=n-1; j>i; --j) {
+                if (data[j] < data[j-1]) {
+                    int tmp = data[j];
+                    data[j] = data[j-1];
+                    data[j-1] = tmp;
+                    flag = true;
+                }
+            }
+            if (flag == false) break;
+        }
+        for (i=0; i<n; ++i) {
+            cout << data[i] << ' ';
+        }
+    }
+    return 0;
+}

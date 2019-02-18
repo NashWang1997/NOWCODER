@@ -1,0 +1,34 @@
+//https://www.nowcoder.com/practice/ae7e58fe24b14d1386e13e7d70eaf04d?tpId=40&tqId=21350&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+bool year(int Y)
+{
+    if (Y%400 == 0) return true;
+    if (Y%4==0 && Y%100!=0) return true;
+    return false;
+}
+
+int main()
+{
+    int Y, M, D;
+    int odd[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int even[] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    while (cin >> Y >> M >> D) {
+        int cnt = 0, i;
+        if (year(Y)) {
+            for (i=0; i<M; ++i) {
+                cnt += even[i];
+            }
+            cnt += D;
+        }
+        else {
+            for (i=0; i<M; ++i) {
+                cnt += odd[i];
+            }
+            cnt += D;
+        }
+        cout << cnt << endl;
+    }
+    return 0;
+}

@@ -1,0 +1,20 @@
+//https://www.nowcoder.com/practice/99e403f8342b4d0e82f1c1395ba62d7b?tpId=40&tqId=21549&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        int N2 = N * N;
+        if (N > 9) {
+            if ((N2-N)%100 == 0) cout << "Yes!" << endl;
+            else cout << "No!" << endl;
+        }
+        else {
+            if ((N2-N)%10 == 0) cout << "Yes!" << endl;
+            else cout << "No!" << endl;
+        }
+    }
+    return 0;
+}

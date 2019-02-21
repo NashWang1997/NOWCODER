@@ -1,0 +1,21 @@
+//https://www.nowcoder.com/practice/40d83e5509b04d20825ae68fe35e9ca8?tpId=40&tqId=21540&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char str1[100], str2[100];
+    while (cin >> str1 >> str2) {
+        char result[201];
+        int i, j;
+        for (i=0; str1[i]!='\0'; ++i) {
+            result[i] = str1[i];
+        }
+        for (j=0; str2[j]!='\0'; ++j,++i) {
+            result[i] = str2[j];
+        }
+        result[i] = '\0';
+        cout << result << endl;
+    }
+    return 0;
+}

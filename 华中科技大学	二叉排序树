@@ -1,0 +1,84 @@
+//https://www.nowcoder.com/practice/b42cfd38923c4b72bde19b795e78bcb3?tpId=40&tqId=21555&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Btree {
+    int data;
+    struct Btree *lchild, *rchild;
+};
+
+void preOrder(Btree *head)
+{
+    if (head != NULL) {
+        cout << head->data << ' ';
+        preOrder(head->lchild);
+        preOrder(head->rchild);
+    }
+}
+
+void midOrder(Btree *head)
+{
+    if (head != NULL) {
+        midOrder(head->lchild);
+        cout << head->data << ' ';
+        midOrder(head->rchild);
+    }
+}
+
+void postOrder(Btree *head)
+{
+    if (head != NULL) {
+        postOrder(head->lchild);
+        postOrder(head->rchild);
+        cout << head->data << ' ';
+    }
+}
+
+int main()
+{
+    int n;
+    while (cin >> n) {
+        Btree *head;
+        head = NULL;
+        int i;
+        for (i=0; i<n; ++i) {
+            int input;
+            cin >> input;
+            if (head == NULL) {
+                head = new Btree;
+                head->data = input; head->lchild = NULL; head->rchild = NULL;
+            }
+            else {
+                Btree *tmp; tmp = head;
+                while (tmp != NULL) {
+                    if (input > tmp->data) {
+                        if (tmp->rchild == NULL) {
+                            tmp->rchild = new Btree;
+                            tmp->rchild->data = input;
+                            tmp->rchild->lchild = NULL; tmp->rchild->rchild = NULL;
+                            break;
+                        }
+                        tmp = tmp->rchild;
+                    }
+                    else if (input < tmp->data) {
+                        if (tmp->lchild == NULL) {
+                            tmp->lchild = new Btree;
+                            tmp->lchild->data = input;
+                            tmp->lchild->lchild = NULL; tmp->lchild->rchild = NULL;
+                            break;
+                        }
+                        tmp = tmp->lchild;
+                    }
+                    else break;
+                }
+            }
+        }
+        preOrder(head);
+        cout << endl;
+        midOrder(head);
+        cout << endl;
+        postOrder(head);
+        cout << endl;
+    }
+    return 0;
+}

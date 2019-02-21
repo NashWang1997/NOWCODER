@@ -1,0 +1,35 @@
+//https://www.nowcoder.com/practice/b183eac8dfba4de99d47c1ca4ce9571f?tpId=40&tqId=21553&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char A[15], B[15];
+    while (cin >> A >> B) {
+        long a = 0, b = 0, times = 1;
+        int i, lena = 0, lenb = 0, tmp;
+        for (i=0; A[i]!='\0'; ++i) ;
+        lena = i;
+        for (i=0; B[i]!='\0'; ++i) ;
+        lenb = i;
+        for (i=lena-1; i>=0; --i) {
+            if (A[i] == '-') a *= -1;
+            else if (A[i] != ',') {
+                tmp = A[i] - '0';
+                a += (tmp * times);
+                times *= 10;
+            }
+        }
+        times = 1;
+        for (i=lenb-1; i>=0; --i) {
+            if (B[i] == '-') b *= -1;
+            else if (B[i] != ',') {
+                tmp = B[i] - '0';
+                b += (tmp * times);
+                times *= 10;
+            }
+        }
+        cout << a + b << endl;
+    }
+    return 0;
+}

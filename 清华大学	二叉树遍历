@@ -1,0 +1,54 @@
+//https://www.nowcoder.com/practice/4b91205483694f449f94c179883c1fef?tpId=40&tqId=21342&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <stack>
+using namespace std;
+
+struct Btree {
+    char data;
+    Btree *lchild, *rchild;
+};
+
+void midOrder(Btree *root)
+{
+    if (root->data != '#') {
+        midOrder(root->lchild);
+        cout << root->data << ' ';
+        midOrder(root->rchild);
+    }
+}
+
+int main()
+{
+    char Data[100];
+    while (cin >> Data) {
+        int i;
+        Btree *root, *tmp;
+        root = new Btree;
+        root->data = Data[0];
+        root->lchild = NULL; root->rchild = NULL;
+        stack <Btree*> node;
+        node.push(root);
+        for (i=1; Data[i]!='\0'; ++i) {
+            tmp = node.top();
+            while (tmp->lchild!=NULL && tmp->rchild!=NULL) {
+                node.pop(); tmp = node.top();
+            }
+            if (tmp->lchild == NULL) {
+                tmp->lchild = new Btree;
+                tmp->lchild->data = Data[i];
+                tmp->lchild->lchild = NULL; tmp->lchild->rchild = NULL;
+                tmp = tmp->lchild;
+            }
+            else if (tmp->rchild == NULL) {
+                tmp->rchild = new Btree;
+                tmp->rchild->data = Data[i];
+                tmp->rchild->lchild = NULL; tmp->rchild->rchild = NULL;
+                tmp = tmp->rchild;
+            }
+            if (Data[i] != '#') node.push(tmp);
+        }
+        midOrder(root);
+        cout << endl;
+    }
+    return 0;
+}

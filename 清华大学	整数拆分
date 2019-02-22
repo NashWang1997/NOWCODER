@@ -1,0 +1,18 @@
+//https://www.nowcoder.com/practice/376537f4609a49d296901db5139639ec?tpId=40&tqId=21339&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N, i;
+    while (cin >> N) {
+        long fn[N+1];
+        fn[0] = 0; fn[1] = 1;
+        for (i=2; i<N+1; ++i) {
+            if (i%2 == 1) fn[i] = fn[i-1] % 1000000000;
+            else fn[i] = (fn[i-1]+fn[i/2]) % 1000000000;
+        }
+        cout << fn[N] << endl;
+    }
+    return 0;
+}

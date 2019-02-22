@@ -1,0 +1,18 @@
+//https://www.nowcoder.com/practice/d0e751eac618463bb6ac447369e4aa25?tpId=40&tqId=21352&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a0, a1, p, q, k;
+    while (cin >> a0 >> a1 >> p >> q >> k) {
+        int result[k+1];
+        result[0] = a0; result[1] = a1;
+        int i;
+        for (i=2; i<k+1; ++i) {
+            result[i] = (p*result[i-1]+q*result[i-2]) % 10000;
+        }
+        cout << result[k] << endl;
+    }
+    return 0;
+}

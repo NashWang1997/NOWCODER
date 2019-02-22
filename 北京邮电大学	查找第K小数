@@ -1,0 +1,63 @@
+//https://www.nowcoder.com/practice/204dfa6fcbc8478f993d23f693189ffd?tpId=40&tqId=21522&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int cnt = 0, k;
+
+struct BiTree {
+    int number;
+    BiTree *lchild, *rchild;
+};
+
+void InOrder(BiTree *root)
+{
+    if (root != NULL) {
+        InOrder(root->lchild);
+        cnt++;
+        if (cnt == k) {
+            cout << root->number << endl;
+            return ;
+        }
+        InOrder(root->rchild);
+    }
+}
+
+int main()
+{
+    int n, i;
+    while (cin >> n) {
+        int tmp;
+        BiTree *root, *point;
+        cin >> tmp;
+        root = new BiTree;
+        root->number = tmp; root->lchild = NULL; root->rchild = NULL;
+        for (i=0; i<n-1; ++i) {
+            cin >> tmp;
+            point = root;
+            while (point != NULL) {
+                if (tmp > point->number) {
+                    if (point->rchild != NULL) point = point->rchild;
+                    else {
+                        point->rchild = new BiTree;
+                        point->rchild->number = tmp;
+                        point->rchild->lchild = NULL; point->rchild->rchild = NULL;
+                        break;
+                    }
+                }
+                else if (tmp < point->number) {
+                    if (point->lchild != NULL) point = point->lchild;
+                    else {
+                        point->lchild = new BiTree;
+                        point->lchild->number = tmp;
+                        point->lchild->lchild = NULL; point->lchild->rchild = NULL;
+                        break;
+                    }
+                }
+                else break;
+            }
+        }
+        cin >> k;
+        InOrder(root);
+    }
+    return 0;
+}

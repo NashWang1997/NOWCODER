@@ -1,0 +1,37 @@
+//https://www.nowcoder.com/practice/103dd589fed14457a673c613d8de3841?tpId=40&tqId=21519&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct BiString {
+    int number;
+    BiString *pre, *next;
+};
+
+int main()
+{
+    long n;
+    while (cin >> n) {
+        BiString *head, *rear, *tmp;
+        head = new BiString;
+        head->number = 0; head->next = NULL; head->pre = NULL; rear = head;
+        int i;
+        long top = n, rest = 0;
+        tmp = head;
+        while (tmp != NULL) {
+            rest = top % 2; top /= 2;
+            tmp->number = rest;
+            if (tmp->pre==NULL && top!=0) {
+                tmp->pre = new BiString;
+                head = tmp->pre; head->next = tmp; head->number = 0; head->pre = NULL;
+            }
+            tmp = tmp->pre;
+        }
+        tmp = head;
+        while (tmp != NULL) {
+            cout << tmp->number;
+            tmp = tmp->next;
+        }
+        cout << endl;
+    }
+    return 0;
+}

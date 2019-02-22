@@ -1,0 +1,39 @@
+//https://www.nowcoder.com/practice/2359e23180194f99828f5cd9c764236a?tpId=40&tqId=21538&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool test(string input, int start, int end)
+{
+    if (input[start]>'9' || input[start]<'0') return false;
+    if (end-start > 3) return false;
+    if (end-start < 3) return true;
+    string test = "255";
+    int result[] = {0, 0, 0};
+    for (int i=0; i<3; ++i) result[i] = input[start+i] - test[i];
+    int tmp = result[0]*100 + result[1]*10 + result[2];
+    if (tmp <= 0) return true;
+    else return false;
+}
+
+int main()
+{
+    string input;
+    while (getline(cin, input)) {
+        int i, start = 0;
+        bool flag = true;
+        for (i=0; input[i]!='\0'; ++i) {
+            if (input[i] == '.') {
+                flag = test(input, start, i);
+                if (!flag) {cout << "No!" << endl; break;}
+                start = i + 1;
+            }
+        }
+        if (flag) {
+            flag = test(input, start, i);
+            if (!flag) cout << "No!" << endl;
+            else cout << "Yes!" << endl;
+        }
+    }
+    return 0;
+}

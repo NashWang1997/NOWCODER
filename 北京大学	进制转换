@@ -1,0 +1,58 @@
+//https://www.nowcoder.com/practice/0337e32b1e5543a19fa380e36d9343d7?tpId=40&tqId=21361&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Num {
+    int data;
+    Num *next;
+};
+
+int main()
+{
+    char number[31];
+    while (cin >> number) {
+        Num *dhead, *p, *tmp;
+        dhead = new Num;
+        dhead->next = NULL;
+        p = dhead;
+        int i;
+        for (i=0; number[i]!='\0'; ++i) {
+            tmp = new Num;
+            tmp->data = number[i] - '0';
+            p->next = tmp; tmp->next = NULL; p = tmp;
+        }
+        Num *bhead;
+        bhead = new Num;
+        bhead->next = NULL;
+        int borrow = 0, rest = 0, total = 0;
+        while (dhead->next != NULL) {
+        	bool top = true;
+            p = dhead->next;
+            while (p != NULL) {
+                total = borrow * 10 + p->data;
+                borrow = total % 2;
+                rest = total / 2;
+                if (top && rest==0) {
+                    dhead->next = p->next;
+                    delete(p);
+                    p = dhead->next;
+                }
+                else {
+                    top = false;
+                    p->data = rest;
+                    p = p->next;
+                }
+            }
+            tmp = new Num;
+            tmp->data = borrow; tmp->next = bhead->next; bhead->next = tmp;
+            borrow = 0;
+        }
+        p = bhead->next;
+        while (p != NULL) {
+            cout << p->data;
+            p = p->next;
+        }
+        cout << endl;
+    }
+    return 0;
+}

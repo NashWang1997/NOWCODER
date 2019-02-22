@@ -1,0 +1,23 @@
+//https://www.nowcoder.com/practice/0fe4d131737d4138912c3b5df8569245?tpId=40&tqId=21536&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        int** matrix;
+        int i, j, tmp;
+        matrix = new int* [N];
+        for (i=0; i<N; ++i) matrix[i] = new int [N];
+        for (j=0; j<N; ++j)
+            for (i=0; i<N; ++i)
+                cin >> matrix[i][j];
+        for (i=0; i<N; ++i) {
+            for (j=0; j<N; ++j)
+                cout << matrix[i][j] << ' ';
+            cout << endl;
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,32 @@
+//https://www.nowcoder.com/practice/fe8bff0750c8448081759f3ee0d86bb4?tpId=40&tqId=21358&tPage=2&rp=2&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Info {
+    int id;
+    char name[10];
+    char sex[5];
+    int old;
+};
+
+int main()
+{
+    int N, M;
+    while (cin >> N) {
+        int i, search;
+        Info info[N];
+        for (i=0; i<N; ++i) {
+            cin >> info[i].id >> info[i].name >> info[i].sex >> info[i].old;
+        }
+        cin >> M;
+        for (i=0; i<M; ++i) {
+            cin >> search;
+            if (search<info[0].id || search>info[N-1].id) cout << "No Answer!" << endl;
+            else {
+                int place = search - info[0].id;
+                cout<<info[place].id<<' '<<info[place].name<<' '<<info[place].sex<<' '<<info[place].old<<endl;   
+            }
+        }
+    }
+    return 0;
+}

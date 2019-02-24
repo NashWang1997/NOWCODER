@@ -1,0 +1,25 @@
+//https://www.nowcoder.com/practice/ad11ebc8d44842c78bb0bbfb6d07ad7a?tpId=40&tqId=21552&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        int** matrix;
+        matrix = new int* [N];
+        int i, j;
+        for (i=0; i<N; ++i) matrix[i] = new int [N];
+        for (i=0; i<N; ++i)
+            for (j=0; j<N; ++j)
+                cin >> matrix[i][j];
+        bool flag = true;
+        for (i=0; i<N; ++i)
+            for (j=i+1; j<N; ++j)
+                if (matrix[i][j] != matrix[j][i])
+                    flag = false;
+        if (flag) cout << "Yes!" << endl;
+        else cout << "No!" << endl;
+    }
+    return 0;
+}

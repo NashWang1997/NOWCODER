@@ -1,0 +1,25 @@
+//https://www.nowcoder.com/practice/df219d60a7af4171a981ef56bd597f7b?tpId=40&tqId=21353&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        int i, m = 0, tmp, Msum = 0, nowsum = 0;
+        bool positive = false;
+        for (i=0; i<N; ++i) {
+            cin >> tmp;
+            if (tmp > 0) positive = true;
+            nowsum += tmp;
+            if (nowsum >= Msum) Msum = nowsum;
+            if (nowsum < 0) nowsum = 0;
+            if (!positive) {
+                if (m == 0) m = tmp;
+                else if (tmp > m) m = tmp;
+            }
+        }
+        if (positive) cout << Msum << endl;
+        else cout << m << endl;
+    }
+}

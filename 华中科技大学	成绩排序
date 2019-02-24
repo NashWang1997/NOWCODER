@@ -1,0 +1,52 @@
+//https://www.nowcoder.com/practice/7a2f7d304d9e43b1bb2a6e72ed65bf51?tpId=40&tqId=21547&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Info {
+    char name[101];
+    int old;
+    int score;
+};
+
+bool before(Info a, Info b)
+{
+    if (a.score < b.score) return true;
+    if (a.score > b.score) return false;
+    int i;
+    for (i=0; a.name[i]!='\0'&&b.name[i]!='\0'; ++i) {
+        if (a.name[i]-b.name[i] < 0) return true;
+        if (a.name[i]-b.name[i] > 0) return false;
+    }
+    if (a.name[i]=='\0' && b.name[i]!='\0') return true;
+    if (a.name[i]!='\0' && b.name[i]=='\0') return false;
+    if (a.old < b.old) return true;
+    else return false;
+}
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        Info stu[N];
+        int i, j;
+        for (i=0; i<N; ++i) {
+            cin >> stu[i].name >> stu[i].old >> stu[i].score;
+        }
+        bool flag;
+        for (i=0; i<N-1; ++i) {
+            flag = false;
+            for (j=N-1; j>i; --j) {
+                if (before(stu[j], stu[j-1])) {
+                    Info tmp;
+                    tmp = stu[j]; stu[j] = stu[j-1]; stu[j-1] = tmp;
+                    flag = true;
+                }
+            }
+            if (!flag) break;
+        }
+        for (i=0; i<N; ++i) {
+            cout << stu[i].name << ' ' << stu[i].old << ' ' << stu[i].score << endl;
+        }
+    }
+    return 0;
+}

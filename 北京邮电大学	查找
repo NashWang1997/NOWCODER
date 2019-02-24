@@ -1,0 +1,37 @@
+//https://www.nowcoder.com/practice/d93db01c2ee44e8a9237d63842aca8aa?tpId=40&tqId=21531&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int m, n;
+    while (cin >> n) {
+        int a[n];
+        int i, j, tmp;
+        for (i=0; i<n; ++i) cin >> a[i];
+        bool flag;
+        for (i=0; i<n-1; ++i) {
+            flag = false;
+            for (j=n-1; j>i; --j) {
+                if (a[j] < a[j-1]) {
+                    tmp = a[j];
+                    a[j] = a[j-1]; a[j-1] = tmp; flag = true;
+                }
+            }
+            if (!flag) break;
+        }
+        cin >> m;
+        for (i=0; i<m; ++i) {
+            cin >> tmp;
+            int start = 0, end = n-1, mid;
+            while (end >= start) {
+                mid = (start+end) / 2;
+                if (a[mid] == tmp) {cout << "YES" << endl; break;}
+                if (a[mid] > tmp) end = mid - 1;
+                else start = mid + 1;
+            }
+            if (end < start) cout << "NO" << endl;
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,19 @@
+//https://www.nowcoder.com/practice/188472f474d5421cb8218b8ad561023b?tpId=40&tqId=21521&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+    while (cin >> n) {
+        int i, tmp, evencnt = 0, oddcnt = 0;
+        for (i=0; i<n; ++i) {
+            cin >> tmp;
+            if (tmp%2 == 0) evencnt++;
+            else oddcnt++;
+        }
+        if (evencnt > oddcnt) cout << "NO" << endl;
+        else cout << "YES" << endl;
+    }
+    return 0;
+}

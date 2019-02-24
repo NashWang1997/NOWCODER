@@ -1,0 +1,47 @@
+//https://www.nowcoder.com/practice/6e732a9632bc4d12b442469aed7fe9ce?tpId=40&tqId=21544&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct BiTree {
+    char value;
+    BiTree *lchild, *rchild;
+};
+
+BiTree* build(char* pre, char* in, int startp, int starti, int len)
+{
+    if (len == 0) return NULL;
+    int i;
+    BiTree *root;
+    root = new BiTree;
+    root->value = pre[startp];
+    for (i=0; i<len; ++i) {
+        if (in[starti+i] == pre[startp]) break;
+    }
+    root->lchild = build(pre, in, startp+1, starti, i);
+    root->rchild = build(pre, in, startp+i+1, starti+i+1, len-i-1);
+    return root;
+}
+
+void postOrder(BiTree *root)
+{
+    if (root != NULL) {
+        postOrder(root->lchild);
+        postOrder(root->rchild);
+        cout << root->value;
+    }
+}
+
+int main()
+{
+    char pre[27], in[27];
+    while (cin >> pre >> in) {
+        BiTree *root;
+        int i, len;
+        for (i=0; pre[i]!='\0'; ++i) ;
+        len = i;
+        root = build(pre, in, 0, 0, len);
+        postOrder(root);
+        cout << endl;
+    }
+    return 0;
+}

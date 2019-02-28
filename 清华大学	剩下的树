@@ -1,0 +1,45 @@
+//https://www.nowcoder.com/practice/f5787c69f5cf41499ba4706bc93700a2?tpId=40&tqId=21356&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Interval {
+    int lport, rport;
+};
+
+int main()
+{
+    int L, M;
+    while (cin >> L >> M) {
+        int i, j;
+        Interval inter[M];
+        for (i=0; i<M; ++i) {
+            cin >> inter[i].lport >> inter[i].rport;
+        }
+        bool flag;
+        for (i=0; i<M-1; ++i) {
+            flag = false;
+            for (j=M-1; j>i; --j) {
+                if (inter[j].lport<inter[j-1].lport || (inter[j].lport==inter[j-1].lport&&inter[j].rport<inter[j-1].rport)) {
+                    int tmpl = inter[j].lport, tmpr = inter[j].rport;
+                    inter[j].lport = inter[j-1].lport; inter[j].rport = inter[j-1].rport;
+                    inter[j-1].lport = tmpl; inter[j-1].rport = tmpr;
+                    flag = true;
+                }
+            }
+            if (!flag) break;
+        }
+        int rest = L + 1, leftend = inter[0].lport, rightend = inter[0].rport;
+        for (i=1; i<M; ++i) {
+            if (inter[i].lport >= rightend) {
+                rest -= (rightend-leftend+1);
+                leftend = inter[i].lport; rightend = inter[i].rport;
+            }
+            else {
+                if (inter[i].rport > rightend) rightend = inter[i].rport;
+            }
+        }
+        rest -= (rightend-leftend+1);
+        cout << rest << endl;
+    }
+    return 0;
+}

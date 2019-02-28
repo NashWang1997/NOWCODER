@@ -1,0 +1,28 @@
+//https://www.nowcoder.com/practice/83800ae3292b4256b7349ded5f178dd1?tpId=40&tqId=21345&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int number(int M, int N, int *value)
+{
+    if (M == 0) return 0;
+    if (N == 0) return -1;
+    if (M < value[N-1]) return number(M, N-1, value);
+    if (number(M-value[N-1], N-1, value) == -1) return number(M, N-1, value);
+    if (number(M, N-1, value) == -1) return 1+number(M-value[N-1], N-1, value);
+    if (1+number(M-value[N-1], N-1, value) >= number(M, N-1, value)) return number(M, N-1, value);
+    return 1 + number(M-value[N-1], N-1, value);
+}
+
+int main()
+{
+    int M, N;
+    while (cin >> M >> N) {
+        int i;
+        int value[N];
+        for (i=0; i<N; ++i) cin >> value[i];
+        int cnt = number(M, N, value);
+        if (cnt == -1) cout << 0 << endl;
+        else cout << cnt << endl;
+    }
+    return 0;
+}

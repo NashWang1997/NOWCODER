@@ -1,0 +1,23 @@
+//https://www.nowcoder.com/practice/5fd9c28b1ce746dd99287a04d8fa9002?tpId=40&tqId=21494&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+bool check(int n)
+{
+    if (n <= 1) return false;
+    int i;
+    for (i=2; i*i<=n; ++i)
+        if (n%i == 0) return false;
+    return true;
+}
+
+int main()
+{
+    int n;
+    while (cin >> n) {
+        bool flag = check(n);
+        if (flag) cout << "yes" << endl;
+        else cout << "no" << endl;
+    }
+    return 0;
+}

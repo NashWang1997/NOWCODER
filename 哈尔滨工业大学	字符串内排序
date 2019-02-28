@@ -1,0 +1,28 @@
+https://www.nowcoder.com/practice/cc2291ab56ee4e919efef2f4d2473bac?tpId=40&tqId=21499&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char str[201];
+    while (cin >> str) {
+        int i, j, len;
+        for (i=0; str[i]!='\0'; ++i) ;
+        len = i;
+        bool flag;
+        for (i=0; i<len-1; ++i) {
+            flag = false;
+            for (j=len-1; j>i; --j) {
+                if (str[j-1]-str[j] > 0) {
+                    char tmp = str[j-1];
+                    str[j-1] = str[j];
+                    str[j] = tmp;
+                    flag = true;
+                }
+            }
+            if (!flag) break;
+        }
+        cout << str << endl;
+    }
+    return 0;
+}

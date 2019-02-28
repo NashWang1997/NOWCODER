@@ -1,0 +1,20 @@
+//https://www.nowcoder.com/practice/ba91786c4759403992896d859e87a6cd?tpId=40&tqId=21530&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+    while (cin >> n) {
+        int i, x, y, tmpx, tmpy;
+        cin >> x >> y;
+        for (i=0; i<n-1; ++i) {
+            cin >> tmpx >> tmpy;
+            if (tmpx<x ||(tmpx==x&&tmpy<y)) {
+                x = tmpx; y = tmpy;
+            }
+        }
+        cout << x << ' ' << y << endl;
+    }
+    return 0;
+}

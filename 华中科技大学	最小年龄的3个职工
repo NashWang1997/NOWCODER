@@ -1,0 +1,51 @@
+//https://www.nowcoder.com/practice/a9fa482eb05149cdbad88689e3cb5f66?tpId=40&tqId=21551&tPage=3&rp=3&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Info {
+    int id;
+    char name[11];
+    int age;
+};
+
+bool before(Info a, Info b)
+{
+    if (a.age < b.age) return true;
+    if (a.age==b.age && a.id<b.id) return true;
+    if (a.age==b.age && a.id==b.id) {
+        int i;
+        for (i=0; a.name[i]!='\0'&&b.name[i]!='\0'; ++i) {
+            if (a.name[i]-b.name[i] < 0) return true;
+            if (a.name[i]-b.name[i] > 0) return false;
+        }
+        if (a.name[i] == '\0') return true;
+        return false;
+    }
+    return false;
+}
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        Info info[N];
+        int i, j;
+        for (i=0; i<N; ++i) cin >> info[i].id >> info[i].name >> info[i].age;
+        bool flag;
+        for (i=0; i<N-1; ++i) {
+            flag = false;
+            for (j=N-1; j>i; --j) {
+                if (before(info[j], info[j-1])) {
+                	Info tmp;
+                	tmp = info[j]; info[j] = info[j-1]; info[j-1] = tmp;
+                    flag = true;
+                }
+            }
+            if (!flag) break;
+        }
+        for (i=0; i<3&&i<N; ++i) {
+            cout << info[i].id << ' ' << info[i].name << ' ' <<info[i].age << endl;
+        }
+    }
+    return 0;
+}

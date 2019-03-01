@@ -1,0 +1,41 @@
+//https://www.nowcoder.com/practice/2364ff2463984f09904170cf6f67f69a?tpId=40&tqId=21367&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+void Merge(int data[], int low, int mid, int high, int N)
+{
+    int tmp[N];
+    int i, j, k;
+    for (k=low; k<=high; ++k) tmp[k] = data[k];
+    for (i=low,j=mid+1,k=i; i<=mid&&j<=high; ++k) {
+        if (tmp[i] <= tmp[j]) data[k] = tmp[i++];
+        else data[k] = tmp[j++];
+    }
+    while (i <= mid) data[k++] = tmp[i++];
+    while (j <= high) data[k++] = tmp[j++];
+}
+
+void MergeSort(int data[], int low, int high, int N)
+{
+    if (low < high) {
+        int mid = (low + high) / 2;
+        MergeSort(data, low, mid, N);
+        MergeSort(data, mid+1, high, N);
+        Merge(data, low, mid, high, N);
+    }
+}
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        if (N == 0) return 0;
+        int data[N];
+        int i;
+        for (i=0; i<N; ++i) cin >> data[i];
+        MergeSort(data, 0, N-1, N);
+        if (N%2 == 0) cout << (data[N/2-1]+data[N/2])/2 << endl;
+        else cout << data[N/2] << endl;
+    }
+    return 0;
+}

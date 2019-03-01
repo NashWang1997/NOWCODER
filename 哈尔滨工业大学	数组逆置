@@ -1,0 +1,19 @@
+//https://www.nowcoder.com/practice/b4f598480524493aae4686947fbf31dc?tpId=40&tqId=21497&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char input[201];
+    while (cin >> input) {
+        int i, len;
+        for (i=0; input[i]!='\0'; ++i) ;
+        len = i;
+        for (i=0; i<len&&len-i-1>i; ++i) {
+            char tmp = input[i];
+            input[i] = input[len-i-1]; input[len-i-1] = tmp;
+        }
+        cout << input << endl;
+    }
+    return 0;
+}

@@ -1,0 +1,52 @@
+//https://www.nowcoder.com/practice/30a0153649304645935c949df7599602?tpId=40&tqId=21539&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct BSTree {
+    int data;
+    BSTree *lchild, *rchild;
+};
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        BSTree *root, *p;
+        int i, input;
+        cin >> input;
+        cout << -1 << endl;
+        root = new BSTree;
+        root->data = input; root->lchild = NULL; root->rchild = NULL;
+        for (i=0; i<N-1; ++i) {
+            cin >> input;
+            p = root;
+            while (p != NULL) {
+                if (input > p->data) {
+                    if (p->rchild == NULL) {
+                        cout << p->data << endl;
+                        p->rchild = new BSTree;
+                        p->rchild->data = input;
+                        p->rchild->lchild = NULL; p->rchild->rchild = NULL;
+                        break;
+                    }
+                    else {
+                        p = p->rchild;
+                    }
+                }
+                else {
+                    if (p->lchild == NULL) {
+                        cout << p->data << endl;
+                        p->lchild = new BSTree;
+                        p->lchild->data = input;
+                        p->lchild->lchild = NULL; p->lchild->rchild = NULL;
+                        break;
+                    }
+                    else {
+                        p = p->lchild;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}

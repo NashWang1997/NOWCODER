@@ -1,0 +1,18 @@
+//https://www.nowcoder.com/practice/01d161052db64c249a47fc723b4fd5db?tpId=40&tqId=21487&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+    while (cin >> n) {
+        int i, j, k;
+        for (i=0; 5*i<=n; ++i) {
+            for (j=0; 5*i+3*j<=n; ++j) {
+                if (5*i+3*j+(100-i-j)/3.0 <= n)
+                    cout << "x=" << i << ",y=" << j << ",z=" << 100-i-j << endl;
+            }
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,19 @@
+//https://www.nowcoder.com/practice/5928127cc6604129923346e955e75984?tpId=40&tqId=21376&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+    char skew[32];
+    while (cin >> skew) {
+        int i, len, value = 0;
+        for (i=0; skew[i]!='\0'; ++i) ;
+        len = i;
+        for (i=0; i<len; ++i) {
+            value += ((skew[i]-'0')*(pow(2,len-i)-1));
+        }
+        cout << value << endl;
+    }
+    return 0;
+}

@@ -1,0 +1,43 @@
+//https://www.nowcoder.com/practice/7385949943264a9fa4348cbd43e6e00c?tpId=40&tqId=21546&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int input;
+    while (cin >> input) {
+        int result[2][5], m[5];
+        result[0][0] = input;
+        int i, j;
+        for (j=1; j<5; ++j) cin >> result[0][j];
+        for (j=0; j<5; ++j) {
+            cin >> result[1][j];
+            if (result[1][j] > result[0][j]) m[j] = 0;
+            else m[j] = 1;
+        }
+        for (i=2; i<4; ++i) {
+            for (j=0; j<5; ++j) {
+                cin >> input;
+                if (input > result[m[j]][j]) {
+                    if (m[j] == 0) {
+                        result[0][j] = result[1][j];
+                        result[1][j] = input;
+                        if (result[1][j] > result[0][j]) m[j] = 0;
+                        else m[j] = 1;
+                    }
+                    else {
+                        result[1][j] = input;
+                        if (result[1][j] > result[0][j]) m[j] = 0;
+                        else m[j] = 1;
+                    }
+                }
+            }
+        }
+        for (i=0; i<2; ++i) {
+            for (j=0; j<5; ++j)
+                cout << result[i][j] << ' ';
+            cout << endl;
+        }
+    }
+    return 0;
+}

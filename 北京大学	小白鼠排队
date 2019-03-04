@@ -1,0 +1,36 @@
+//https://www.nowcoder.com/practice/27fbaa6c7b2e419bbf4de8ba60cf372b?tpId=40&tqId=21368&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Info {
+    int weight;
+    char color[11];
+};
+
+int main()
+{
+    int N;
+    while (cin >> N) {
+        int i, j;
+        Info mouse[N];
+        for (i=0; i<N; ++i) {
+            cin >> mouse[i].weight >> mouse[i].color;
+        }
+        bool flag;
+        for (i=0; i<N-1; ++i) {
+            flag = false;
+            for (j=N-1; j>i; --j) {
+                if (mouse[j].weight > mouse[j-1].weight) {
+                    Info tmp = mouse[j];
+                    mouse[j] = mouse[j-1]; mouse[j-1] = tmp;
+                    flag = true;
+                }
+            }
+            if (!flag) break;
+        }
+        for (i=0; i<N; ++i) {
+            cout << mouse[i].color << endl;
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,45 @@
+//https://www.nowcoder.com/practice/d9aa3894d3aa4887843a85d26daa4437?tpId=40&tqId=21407&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string input;
+    while (getline(cin, input)) {
+        int i, j, p, len;
+        for (i=0; input[i]!='\0'; ++i) ;
+        len = i;
+        bool flag;
+        for (i=0; i<len-1; ++i) {
+            if ((input[i]>='a'&&input[i]<='z')||(input[i]>='A'&&input[i]<='Z')) {
+                bool flag = false;
+                for (j=len-1; j>i; --j) {
+                    if ((input[j]>='a'&&input[j]<='z')||(input[j]>='A'&&input[j]<='Z')) {
+                        p = j - 1;
+                        while (p>=i&&(input[p]<'a'||input[p]>'z')&&(input[p]<'A'||input[p]>'Z')) {
+                            p--;
+                        }
+                        if (p < i) break;
+                        else {
+                            int lowj, lowp;
+                            if (input[j]>='A'&&input[j]<='Z') lowj = input[j] - 'A';
+                            else lowj = input[j] - 'a';
+                            if (input[p]>='A'&&input[p]<='Z') lowp = input[p] - 'A';
+                            else lowp = input[p] - 'a';
+                            if (lowj < lowp) {
+                                char tmp = input[j];
+                                input[j] = input[p]; input[p] = tmp;
+                                flag = true;
+                            }
+                        }
+                    }
+                    else flag = true;
+                }
+                if (!flag) break;
+            }
+        }
+        cout << input << endl;
+    }
+    return 0;
+}

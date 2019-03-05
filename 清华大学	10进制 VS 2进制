@@ -1,0 +1,127 @@
+//https://www.nowcoder.com/practice/fd972d5d5cf04dd4bb4e5f027d4fc11e?tpId=40&tqId=21357&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+struct Num {
+	int data;
+	Num *next;
+};
+
+Num* DtoB(Num* Dhead)
+{
+	Num *Bhead, *p;
+	Bhead = new Num;
+	Bhead->next = NULL;
+	while (Dhead->next != NULL) {
+		p = Dhead->next;
+		if (p->data == 0) {
+			Dhead->next = p->next; delete(p);
+		}
+		else {
+			int borrow = 0, tmp;
+			while (p != NULL) {
+				tmp = borrow * 10 + p->data;
+				borrow = tmp % 2; p->data = tmp / 2;
+				p = p->next;
+			}
+			p = new Num;
+			p->data = borrow; p->next = Bhead->next; Bhead->next = p;
+		}
+	}
+	return Bhead;
+}
+
+Num* ADD(Num* head, Num* times)
+{
+	Num *p, *q;
+	p = head; q = times;
+	int high = 0, tmp;
+	while (p->next!=NULL && q->next!=NULL) {
+		tmp = p->next->data + q->next->data + high;
+		high = tmp / 10; p->next->data = tmp % 10;
+		p = p->next; q = q->next;
+	}
+	while (q->next != NULL) {
+		tmp = q->next->data + high;
+		high = tmp / 10;
+		p->next = new Num;
+		p->next->data = tmp % 10; p->next->next = NULL;
+		p = p->next; q = q->next;
+	}
+	if (high != 0) {
+		p->next = new Num;
+		p->next->data = high; p->next->next = NULL;
+	}
+	return head;
+}
+
+Num* MULTIPLY(Num* times)
+{
+	Num *p;
+	p = times;
+	int high = 0, tmp;
+	while (p->next != NULL) {
+		tmp = p->next->data * 2 + high;
+		high = tmp / 10; p->next->data = tmp % 10;
+		p = p->next;
+	}
+	if (high != 0) {
+		p->next = new Num;
+		p->next->data = high; p->next->next = NULL;
+	}
+	return times;
+}
+
+Num* BtoD(Num* Bhead)
+{
+	Num *times, *p, *Dhead;
+	times = new Num;
+	times->next = new Num;
+	times->next->data = 1; times->next->next = NULL;
+	Dhead = new Num;
+	Dhead->next = NULL;
+	p = Bhead->next;
+	while (p != NULL) {
+		if (p->data == 1) {
+			Dhead = ADD(Dhead, times);
+		}
+		p = p->next;
+		times = MULTIPLY(times);
+	}
+	return Dhead;
+}
+
+int main()
+{
+	char input[1001];
+	while (cin >> input) {
+		Num *Dhead, *p;
+		Dhead = new Num;
+		Dhead->next = NULL;
+		int i;
+		p = Dhead;
+		for (i=0; input[i]!='\0'; ++i) {
+			p->next = new Num;
+			p->next->data = input[i] - '0'; p->next->next = NULL;
+			p = p->next;
+		}
+		Num *Bhead, *NDhead, *q;
+		Bhead = DtoB(Dhead);
+		NDhead = BtoD(Bhead);
+		p = NDhead->next;
+		while (p->next != NULL) {
+			q = p->next;
+			p->next = q->next;
+			q->next = NDhead->next;
+			NDhead->next = q;
+		}
+		p = NDhead;
+		while (p->next!=NULL && p->next->data==0) p = p->next;
+		while (p->next != NULL) {
+			cout << p->next->data;
+			p = p->next;
+		}
+		cout << endl;
+	}
+	return 0;
+}

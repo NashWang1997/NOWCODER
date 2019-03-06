@@ -1,0 +1,86 @@
+//https://www.nowcoder.com/practice/ccb7383c76fc48d2bbc27a2a6319631c?tpId=40&tqId=21442&tPage=5&rp=5&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int odddays[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+int evendays[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+
+bool iseven(int y)
+{
+    if (y%400 == 0) return true;
+    if (y%100!=0 && y%4==0) return true;
+    return false;
+}
+
+int wholeyear(int y1, int y2)
+{
+    int i, cnt = 0;
+    for (i=y1; i<=y2; ++i) {
+        if (iseven(i)) cnt += 366;
+        else cnt += 365;
+    }
+    return cnt;
+}
+
+int daftery(int y, int m, int d)
+{
+    int i, cnt = 0;
+    if (iseven(y)) {
+        for (i=m+1; i<=12; ++i) {
+            cnt += evendays[i];
+        }
+        cnt += evendays[m] - d + 1;
+    }
+    else {
+        for (i=m+1; i<=12; ++i) {
+            cnt += odddays[i];
+        }
+        cnt += odddays[m] - d + 1;
+    }
+    return cnt;
+}
+
+int dbeforey(int y, int m, int d)
+{
+	int i, cnt = 0;
+	if (iseven(y))
+		for (i=1; i<=m-1; ++i) {
+			cnt += evendays[i];
+		}
+	else
+		for (i=1; i<=m-1; ++i) {
+			cnt += odddays[i];
+		}
+	cnt += d;
+	return cnt;
+}
+
+int between(int y1, int m1, int d1, int y2, int m2, int d2)
+{
+    int daysbetweenyears = 0;
+    if (y2-y1 >= 2) daysbetweenyears = wholeyear(y1+1, y2-1);
+    int daysinyear1 = dbeforey(y2, m2, d2);
+    int daysinyear2 = daftery(y1, m1, d1);
+    int repeat = 0;
+    if (y1 == y2) {
+    	if (iseven(y1)) repeat = 366;
+    	else repeat = 365;
+    }
+    return daysbetweenyears + daysinyear1 + daysinyear2 - repeat;
+}
+
+int main()
+{
+    char start[9], end[9];
+    while (cin >> start >> end) {
+        int y1, m1, d1, y2, m2, d2;
+        y1 = (start[0]-'0')*1000+(start[1]-'0')*100+(start[2]-'0')*10+start[3]-'0';
+        y2 = (end[0]-'0')*1000+(end[1]-'0')*100+(end[2]-'0')*10+end[3]-'0';
+        m1 = (start[4]-'0')*10+start[5]-'0';
+        m2 = (end[4]-'0')*10+end[5]-'0';
+        d1 = (start[6]-'0')*10+start[7]-'0';
+        d2 = (end[6]-'0')*10+end[7]-'0';
+        cout << between(y1, m1, d1, y2, m2, d2) << endl;
+    }
+    return 0;
+}

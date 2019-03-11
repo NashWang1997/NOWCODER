@@ -1,0 +1,24 @@
+//https://www.nowcoder.com/practice/ae759916631f4711a90c4d4d9657f4b0?tpId=40&tqId=21509&tPage=5&rp=5&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    long n, nsquare;
+    while (cin >> n) {
+        nsquare = n * n;
+        int rest, cnt1 = 0, cnt2 = 0;
+        rest = n;
+        while (rest != 0) {
+            cnt1 += (rest % 10);
+            rest /= 10;
+        }
+        rest = nsquare;
+        while (rest != 0) {
+            cnt2 += (rest % 10);
+            rest /= 10;
+        }
+        cout << cnt1 << ' ' << cnt2 << endl;
+    }
+    return 0;
+}

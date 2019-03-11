@@ -1,0 +1,26 @@
+//https://www.nowcoder.com/practice/1b79865e2f534db0adba84dca10d6bae?tpId=40&tqId=31030&tPage=4&rp=4&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+bool sym(int x)
+{
+    int number[5];
+    int i = 0, rest = x, j, p;
+    while (rest != 0) {
+        number[i] = rest % 10;
+        rest /= 10;
+        i++;
+    }
+    for (j=0,p=i-1; j<=p; ++j,--p) {
+        if (number[j] != number[p]) return false;
+    }
+    return true;
+}
+
+int main()
+{
+    for (int i=1; i<256; ++i) {
+        if (sym(i*i)) cout << i << endl;
+    }
+    return 0;
+}

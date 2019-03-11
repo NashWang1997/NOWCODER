@@ -1,0 +1,25 @@
+//https://www.nowcoder.com/practice/9324a1458c564c4b9c4bfc3867a2aa66?tpId=40&tqId=21347&tPage=5&rp=5&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int root(int x, int y, int k)
+{
+    if (y == 1) {
+        if (x < k) return x;
+        else return root(root(x/k,1,k)+x%k,1,k);
+    }
+    else {
+        if (x >= k) return root(root(x,1,k),y,k);
+        if (y%2 == 0) return root(x*x,y/2,k);
+        else return root(x*root(x*x,(y-1)/2,k),1,k);
+    }
+}
+
+int main()
+{
+    int x, y, k;
+    while (cin >> x >> y >> k) {
+        cout << root(x, y, k) << endl;
+    }
+    return 0;
+}

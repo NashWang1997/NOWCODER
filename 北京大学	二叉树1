@@ -1,0 +1,18 @@
+//https://www.nowcoder.com/practice/f74c7506538b44399f2849eba2f050b5?tpId=40&tqId=21416&tPage=6&rp=6&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int node(int m, int n)
+{
+    if (m > n) return 0;
+    return (1+node(m*2,n)+node(m*2+1,n));
+}
+
+int main()
+{
+    int m, n;
+    while (cin >> m >> n) {
+        cout << node(m, n) << endl;
+    }
+    return 0;
+}

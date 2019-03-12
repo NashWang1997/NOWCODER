@@ -1,0 +1,54 @@
+//https://www.nowcoder.com/practice/82442ee76977479e8ab4b88dfadfca9f?tpId=40&tqId=21525&tPage=6&rp=6&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool five(string a, char start)
+{
+    int i, cnt = 0;
+    char m = start;
+    for (i=0; a[i]!='\0'; ++i) {
+        if (a[i]-m > 0) {
+            if (a[i]-m == 1) {
+                m = a[i]; cnt++;
+            }
+            else {
+                m = a[i]; cnt = 0;
+            }
+        }
+        if (cnt == 5) return true;
+    }
+    return false;
+}
+
+bool four(string a, char start, int length)
+{
+    int i, j;
+    bool flag;
+    for (i=0; a[i]!='\0'; ++i) {
+        if (a[i]-start>0 && (i==0||a[i]-a[i-1]!=0)) {
+            flag = true;
+            for (j=i+1; a[j]!='\0'&&j<i+length; ++j) {
+                if (a[j] != a[i]) {flag = false; break;}
+            }
+            if (flag && j==i+length) return true;
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    string a, b;
+    while (cin >> a >> b) {
+        if (b.length() == 5) {
+            if (five(a, b[0])) cout << "YES" << endl;
+            else cout << "NO" << endl;
+        }
+        else {
+            if (four(a, b[0], b.length())) cout << "YES" << endl;
+            else cout << "NO" << endl;
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,55 @@
+//https://www.nowcoder.com/practice/8ef02ef8571b417d8c311a87861f7a03?tpId=40&tqId=21387&tPage=6&rp=6&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Num {
+    char data;
+    Num *next;
+};
+
+long AtoD(int a, string n)
+{
+    long times = 1, value = 0, i, len;
+    for (i=0; n[i]!='\0'; ++i) ;
+    len = i;
+    for (i=len-1; i>=0; --i) {
+        if (n[i]>='0' && n[i]<='9') value += ((n[i]-'0')*times);
+        else if (n[i]>='A' && n[i]<='F') value += ((n[i]-'A'+10)*times);
+        else value += ((n[i]-'a'+10)*times);
+        times *= a;
+    }
+    return value;
+}
+
+void DtoB(long value, int b)
+{
+    Num *head, *p;
+    head = new Num;
+    head->next = NULL;
+    int i, remain;
+    long rest = value;
+    while (rest != 0) {
+        remain = rest % b;
+        p = new Num;
+        if (remain < 10) p->data = (char) ('0'+remain);
+        else p->data = (char) ('A'+remain-10);
+        p->next = head->next;
+        head->next = p;
+        rest /= b;
+    }
+    p = head;
+    while (p->next != NULL) {cout << p->next->data; p = p->next;}
+    cout << endl;
+}
+
+int main()
+{
+    int a, b;
+    string n;
+    while (cin >> a >> n >> b) {
+        long value = AtoD(a, n);
+        DtoB(value, b);
+    }
+    return 0;
+}

@@ -1,0 +1,24 @@
+//https://www.nowcoder.com/practice/42cb1c7f7344466b8cb1710cb12d06b1?tpId=40&tqId=21430&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int fac[12];
+    fac[0] = 1; fac[1] = 1;
+    int i, n;
+    for (i=2; i<12; ++i) fac[i] = fac[i-1] * i;
+    while (cin >> n) {
+        if (n == 0) cout << "NO" << endl;
+        else {
+            for (i=11; i>=0; --i) {
+                if (fac[i] <= n) {
+                    n -= fac[i];
+                }
+                if (n == 0) {cout << "YES" << endl; break;}
+            }
+            if (n > 0) cout << "NO" << endl;
+        }
+    }
+    return 0;
+}

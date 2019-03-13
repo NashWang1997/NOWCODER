@@ -1,0 +1,250 @@
+//https://www.nowcoder.com/practice/6bc1dd2ee0ce4257821531719b8d1c83?tpId=40&tqId=21432&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Num {
+    int data;
+    Num *next;
+};
+
+void Display(Num *integer);
+void ADD(Num *A, Num *B);
+
+bool absbigger(Num *A, Num *B)
+{
+    int highA[401], highB[401];
+    int lenA = 0, lenB = 0, i;
+    Num *p;
+    p = A;
+    while (p->next != NULL) {highA[lenA] = p->next->data; lenA++; p = p->next;}
+    p = B;
+    while (p->next != NULL) {highB[lenB] = p->next->data; lenB++; p = p->next;}
+    if (lenA > lenB) return true;
+    else if (lenA < lenB) return false;
+    for (i=lenA-1; i>=0; --i) {
+        if (highA[i]-highB[i] > 0) return true;
+        else if (highA[i]-highB[i] < 0) return false;
+    }
+    return true;
+}
+
+void sub_num(Num *A, Num *B, Num *C)
+{
+    Num *p, *q, *r;
+    p = A; q = B; r = C;
+    int borrow = 0, tmp;
+    while (p->next!=NULL && q->next!=NULL) {
+        r->next = new Num; r->next->next = NULL;
+        tmp = p->next->data - borrow - q->next->data;
+        if (tmp >= 0) {
+            r->next->data = tmp; borrow = 0;
+        }
+        else {
+            tmp += 10; borrow = 1;
+            r->next->data = tmp;
+        }
+        p = p->next; q = q->next; r = r->next;
+    }
+    while (p->next != NULL) {
+        r->next = new Num; r->next->next = NULL;
+        tmp = p->next->data - borrow;
+        if (tmp >= 0) {r->next->data = tmp; borrow = 0;}
+        else {tmp += 10; borrow = 1; r->next->data = tmp;}
+        p = p->next; r = r->next;
+    }
+    Display(C);
+}
+
+void SUB(Num *A, Num *B)
+{
+    if (A->data != B->data) {
+        B->data = (1-B->data);
+        ADD(A, B);
+        B->data = (1-B->data);
+    }
+    else {
+        Num *Chead;
+        Chead = new Num; Chead->next = NULL;
+        if (absbigger(A, B)) {
+            if (A->data == 1) {
+                Chead->data = 1;
+                sub_num(A, B, Chead);
+            }
+            else {
+                Chead->data = 0;
+                sub_num(A, B, Chead);
+            }
+        }
+        else {
+            if (A->data == 1) {
+                Chead->data = 0;
+                sub_num(B, A, Chead);
+            }
+            else {
+                Chead->data = 1;
+                sub_num(B, A, Chead);
+            }
+        }
+    }
+}
+
+void Display(Num *integer)
+{
+    Num *p, *q;
+    p = integer->next;
+    while (p->next != NULL) {
+        q = p->next; p->next = q->next; q->next = integer->next; integer->next = q;
+    }
+    p = integer->next;
+    while (p!=NULL && p->data==0) p = p->next;
+    if (p == NULL) cout << 0 << endl;
+    else {
+        if (integer->data == 1) cout << '-';
+        while (p != NULL) {
+            cout << p->data; p = p->next;
+        }
+        cout << endl;
+    }
+}
+
+void ADD(Num *A, Num *B)
+{
+    if (A->data != B->data) {
+        B->data = (1-B->data);
+        SUB(A, B);
+        B->data = (1-B->data);
+    }
+    else {
+        Num *Chead, *p, *q, *r;
+        Chead = new Num; Chead->next = NULL; Chead->data = A->data;
+        p = A; q = B; r = Chead;
+        int in = 0, tmp;
+        while (p->next!=NULL && q->next!=NULL) {
+            tmp = p->next->data + q->next->data + in;
+            r->next = new Num;
+            r->next->data = tmp % 10; r->next->next = NULL;
+            in = tmp / 10;
+            p = p->next; q = q->next; r = r->next;
+        }
+        while (p->next != NULL) {
+            tmp = p->next->data + in;
+            r->next = new Num;
+            r->next->data = tmp % 10; r->next->next = NULL;
+            in = tmp / 10;
+            p = p->next; r = r->next;
+        }
+        while (q->next != NULL) {
+            tmp = q->next->data + in;
+            r->next = new Num;
+            r->next->data = tmp % 10; r->next->next = NULL;
+            in = tmp / 10;
+            q = q->next; r = r->next;
+        }
+        if (in != 0) {
+            r->next = new Num;
+            r->next->data = in; r->next->next = NULL;
+        }
+        Display(Chead);
+    }
+}
+
+Num* STRINGtoSTRUCT(string str)
+{
+    Num *head, *p;
+    head = new Num; head->next = NULL;
+    int i;
+    if (str[0]>='0' && str[0]<='9') head->data = 0;
+    else head->data = 1;
+    for (i=head->data; str[i]!='\0'; ++i) {
+        p = new Num; p->data = str[i] - '0'; p->next = head->next;
+        head->next = p;
+    }
+    return head;
+}
+
+Num* mul_num(Num *A, int x)
+{
+    Num *pro, *p, *q;
+    pro = new Num; pro->data = A->data; pro->next = NULL;
+    p = A; q = pro;
+    int tmp, in = 0;
+    while (p->next != NULL) {
+        tmp = p->next->data * x + in;
+        q->next = new Num;
+        q->next->data = tmp % 10; q->next->next = NULL;
+        in = tmp / 10;
+        p = p->next; q = q->next;
+    }
+    if (in != 0) {
+        q->next = new Num;
+        q->next->data = in; q->next->next = NULL;
+    }
+    return pro;
+}
+
+Num* add_num(Num *D, Num *S)
+{
+    Num *p, *q;
+    p = D; q = S;
+    int in = 0, tmp;
+    while (p->next!=NULL && q->next!=NULL) {
+        tmp = p->next->data + q->next->data + in;
+        p->next->data = tmp % 10; in = tmp / 10;
+        p = p->next; q = q->next;
+    }
+    while (p->next != NULL) {
+        tmp = p->next->data + in;
+        p->next->data = tmp % 10; in = tmp / 10;
+        p = p->next;
+    }
+    while (q->next != NULL) {
+        tmp = q->next->data + in;
+        p->next = new Num;
+        p->next->data = tmp % 10; in = tmp / 10; p->next->next = NULL;
+        q = q->next; p = p->next;
+    }
+    if (in != 0) {p->next = new Num; p->next->data = in; p->next->next = NULL;}
+    return D;
+}
+
+void MUL(Num *A, Num *B)
+{
+    Num *Acopy, *p, *q, *Sum;
+    Acopy = new Num; Acopy->data = A->data; Acopy->next = NULL;
+    Sum = new Num; Sum->next = NULL;
+    if (A->data == B->data) Sum->data = 0;
+    else Sum->data = 1;
+    p = Acopy; q = A;
+    while (q->next != NULL) {
+        p->next = new Num;
+        p->next->data = q->next->data; p->next->next = NULL;
+        p = p->next; q = q->next;
+    }
+    p = B;
+    while (p->next != NULL) {
+        if (p->next->data != 0) {
+            Num *Pro;
+            Pro = mul_num(Acopy, p->next->data);
+            Sum = add_num(Sum, Pro);
+        }
+        p = p->next;
+        q = new Num;
+        q->data = 0; q->next = Acopy->next; Acopy->next = q;
+    }
+    Display(Sum);
+}
+
+int main()
+{
+    string a, b;
+    while (cin >> a >> b) {
+        Num *Ahead, *Bhead;
+        Ahead = STRINGtoSTRUCT(a);
+        Bhead = STRINGtoSTRUCT(b);
+        ADD(Ahead, Bhead);
+        SUB(Ahead, Bhead);
+        MUL(Ahead, Bhead);
+    }
+    return 0;
+}

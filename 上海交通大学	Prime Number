@@ -1,0 +1,30 @@
+//https://www.nowcoder.com/practice/c5f8688cea8a4a9a88edbd67d1358415?tpId=40&tqId=21441&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+bool isPrime(int num)
+{
+    int i = 3;
+    for (i=3; i*i<=num; i+=2) {
+        if (num%i == 0) return false;
+    }
+    return true;
+}
+
+int main()
+{
+    int prime[10000];
+    prime[0] = 2; prime[1] = 3;
+    int i = 2, j = 5;
+    while (i < 10000) {
+        if (isPrime(j)) {
+            prime[i] = j; i++;
+        }
+        j += 2;
+    }
+    int k;
+    while (cin >> k) {
+        cout << prime[k-1] << endl;
+    }
+    return 0;
+}

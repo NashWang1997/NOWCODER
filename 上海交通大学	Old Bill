@@ -1,0 +1,25 @@
+//https://www.nowcoder.com/practice/17a30153e092493e8b4d13f321343927?tpId=40&tqId=21426&tPage=13&rp=13&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N, X, Y, Z;
+    while (cin >> N >> X >> Y >> Z) {
+        int i, j;
+        bool flag = false;
+        for (i=9; i>0; --i) {
+            for (j=9; j>=0; --j) {
+                int price = i*10000+X*1000+Y*100+Z*10+j;
+                if (price%N == 0) {
+                    cout << i << ' ' << j << ' ' << (price/N) << endl;
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) break;
+        }
+        if (!flag) cout << 0 << endl;
+    }
+    return 0;
+}

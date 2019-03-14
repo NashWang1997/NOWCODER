@@ -1,0 +1,42 @@
+//https://www.nowcoder.com/practice/a3417270d1c0421587a60b93cdacbca0?tpId=40&tqId=21439&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+using namespace std;
+
+int days[2001][12][31];
+int mdays[12][2] = {31,31, 28,29, 31,31, 30,30, 31,31, 30,30, 31,31, 31,31, 30,30, 31,31, 30,30, 31,31};
+string monthName[] = {"January","February","March","April","May","June","July","August","September","October","November","December"};
+string weekName[] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+
+bool leap(int year)
+{
+    if ((year%400==0) || (year%100!=0&&year%4==0)) return true;
+    return false;
+}
+
+int main()
+{
+    int d, y, m, cnt = 0, i, start, sub;
+    y = 1000, m = 1, d = 1;
+    while (y <= 3000) {
+        days[y-1000][m-1][d-1] = cnt;
+        cnt++; d++;
+        if (d > mdays[m-1][leap(y)]) {
+            d = 1; m++;
+            if (m > 12) {m = 1; y++;}
+        }
+    }
+    start = 7 - (days[1019][2][16]-days[0][0][0])%7;
+    string month;
+    while (cin >> d >> month >> y) {
+        for (i=0; i<12; ++i) {
+            if (monthName[i] == month) {
+                m = i + 1; break;
+            }
+        }
+        sub = (days[y-1000][m-1][d-1]-days[0][0][0])%7 + start;
+        if (sub > 7) sub -= 7;
+        cout << weekName[sub-1] << endl;
+    }
+    return 0;
+}

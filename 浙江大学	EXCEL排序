@@ -1,0 +1,49 @@
+//https://www.nowcoder.com/practice/bf3ec474bb7d410dbb9d5bbcd07a93e5?tpId=40&tqId=21476&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+struct Info {
+    string Id;
+    string Name;
+    int Score;
+};
+
+bool cmpC1(Info a, Info b)
+{
+    return a.Id.compare(b.Id) < 0;
+}
+
+bool cmpC2(Info a, Info b)
+{
+    if (a.Name.compare(b.Name) > 0) return false;
+    if (a.Name.compare(b.Name) < 0) return true;
+    return cmpC1(a, b);
+}
+
+bool cmpC3(Info a, Info b)
+{
+    if (a.Score > b.Score) return false;
+    if (a.Score < b.Score) return true;
+    return cmpC1(a, b);
+}
+
+int main()
+{
+    int N, C;
+    while (cin >> N >> C) {
+        if (N == 0) break;
+        Info record[N];
+        int i;
+        for (i=0; i<N; ++i) cin >> record[i].Id >> record[i].Name >> record[i].Score;
+        cout << "Case:" << endl;
+        if (C == 1) sort(record, record+N, cmpC1);
+        else if (C == 2) sort(record, record+N, cmpC2);
+        else sort(record, record+N, cmpC3);
+        for (i=0; i<N; ++i) {
+            cout << record[i].Id << ' ' << record[i].Name << ' ' << record[i].Score << endl;
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,73 @@
+//https://www.nowcoder.com/practice/97fd3a67eff4455ea3f4d179d6467de9?tpId=40&tqId=21389&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+void fillWithSpace(char** target, int row, int line, int length)
+{
+    int i, j;
+    for (i=0; i<length; ++i)
+        for(j=0; j<length; ++j)
+            target[row+i][line+j] = ' ';
+}
+
+void fillWithMatrix(char** target, int row, int line, char** temp, int length)
+{
+    int i, j;
+    for (i=0; i<length; ++i)
+        for (j=0; j<length; ++j)
+            target[row+i][line+j] = temp[i][j];
+}
+
+char** fillIn(char** temp, int length, char** origin, int N)
+{
+    int i, j, newlen = pow(length, 2);
+    char** result;
+    result = new char* [newlen];
+    for (i=0; i<newlen; ++i) result[i] = new char [newlen];
+    for (i=0; i<N; ++i) {
+        for (j=0; j<N; ++j) {
+            if (origin[i][j] == ' ') fillWithSpace(result, i*length, j*length, length);
+            else fillWithMatrix(result, i*length, j*length, temp, length);
+        }
+    }
+    return result;
+}
+
+int main()
+{
+    int N, Q;
+    char **input;
+    while (cin >> N) {
+        if (N == 0) break;
+        int i, j;
+        input = new char *[N];
+        for (i=0; i<N; ++i) input[i] = new char [N];
+        getchar();
+        for (i=0; i<N; ++i) {
+            char line[N+1];
+            cin.getline(line, N+1);
+            for (j=0; j<N; ++j) input[i][j] = line[j];
+        }
+        cin >> Q;
+        char **temp;
+        temp = new char *[N];
+        for (i=0; i<N; ++i) temp[i] = new char [N];
+        for (i=0; i<N; ++i)
+            for (j=0; j<N; ++j)
+                temp[i][j] = input[i][j];
+        int length = N;
+        for (i=0; i<Q-1; ++i) {
+            temp = fillIn(temp, length, input, N);
+            length *= N;
+        }
+        for (i=0; i<length; ++i) {
+            for (j=0; j<length; ++j) {
+                cout << temp[i][j];
+            }
+            cout << endl;
+        }
+    }
+    return 0;
+}

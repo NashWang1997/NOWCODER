@@ -1,0 +1,71 @@
+//https://www.nowcoder.com/practice/f7eba38f7cd24c45982831e0f38518f9?tpId=40&tqId=21486&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
+
+int Cmax, D, Davg, N;
+double prices = 0, remain = 0, dist = 0;
+
+struct Pair {
+    double Pi;
+    int Di;
+    bool operator < (const Pair &tmp) const
+    {
+        return Di < tmp.Di;
+    }
+};
+
+int nextstop(Pair station[], int Si, int fullD)
+{
+    if (station[Si+1].Di-station[Si].Di > fullD) {
+        dist += (Cmax*Davg);
+        return -1;
+    }
+    int i, mi = Si + 1;
+    double mp = station[mi].Pi;
+    bool flag = false;
+    for (i=1; i<=N&&station[Si+i].Di-station[Si].Di<=fullD; ++i) {
+        if (station[Si+i].Pi < station[Si].Pi) {flag = true; break;}
+        if (station[Si+i].Pi < mp) {mi = Si + i; mp = station[Si+i].Pi;}
+    }
+    if (flag) { //范围内有较小的站点
+        int Dbetween = station[Si+i].Di-station[Si].Di;
+        double needfule = Dbetween * 1.0 / Davg;
+        if (needfule < remain) {remain -= needfule; dist += Dbetween;}
+        else {
+            prices += (station[Si].Pi*(needfule-remain));
+            remain = 0; dist += Dbetween;
+        }
+        return Si+i;
+    }
+    int Dbetween = station[mi].Di - station[Si].Di;
+    dist += Dbetween;
+    double needfule = Cmax - remain;
+    prices += (station[Si].Pi*needfule);
+    remain = Cmax - Dbetween * 1.0 / Davg;
+    return mi;
+}
+
+int main()
+{
+    while (cin >> Cmax >> D >> Davg >> N) {
+        prices = 0; remain = 0; dist = 0;
+        Pair station[N+1];
+        int i;
+        for (i=0; i<N; ++i) cin >> station[i].Pi >> station[i].Di;
+        station[N].Pi = 0; station[N].Di = D;
+        sort(station, station+N);
+
+        if (station[0].Di != 0) cout << "The maximum travel distance = 0.00" << endl;
+        else {
+            int Si = 0, fullD = Cmax * Davg;
+            while (Si!=-1 && Si!=N) {
+                Si = nextstop(station, Si, fullD);
+            }
+            if (Si == -1) printf("The maximum travel distance = %.2f\n", dist);
+            else printf("%.2f\n", prices);
+        }
+    }
+    return 0;
+}

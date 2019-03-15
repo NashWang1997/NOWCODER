@@ -1,0 +1,71 @@
+//https://www.nowcoder.com/practice/5759c29a28cb4361bc3605979d5a6130?tpId=40&tqId=21460&tPage=1&rp=1&ru=/ta/kaoyan&qru=/ta/kaoyan/question-ranking
+#include <iostream>
+#include <string>
+#include <stack>
+#include <stdio.h>
+using namespace std;
+
+double StoI(string str, int left, int right)
+{
+    double cnt = 0, times = 1, i;
+    for (i=right-1; i>=left; --i) {
+        cnt += ((str[i]-'0')*times);
+        times *= 10;
+    }
+    return cnt;
+}
+
+bool higher(char a, char b)
+{
+    if ((a=='+'||a=='-') && (b=='*'||b=='/')) return false;
+    return true;
+}
+
+int main()
+{
+    string input;
+    while (getline(cin, input)) {
+        if (input == "0") break;
+        int i = 0, j = 0, opt = 0;
+        stack <double> num; stack <char> optchar;
+        while (input[j] != '\0') {
+            for (j=i; input[j]!='\0'&&input[j]!=' '; ++j) ;
+            if (opt == 0) {
+                double number = StoI(input, i, j);
+                num.push(number);
+            }
+            else {
+                if (optchar.empty()) optchar.push(input[i]);
+                else {
+                    while (!optchar.empty() && higher(optchar.top(), input[i])) {
+                        char choice = optchar.top(); optchar.pop();
+                        double n1 = num.top(); num.pop();
+                        double n2 = num.top(); num.pop();
+                        switch (choice) {
+                            case '+': {num.push(n2+n1); break;}
+                            case '-': {num.push(n2-n1); break;}
+                            case '*': {num.push(n2*n1); break;}
+                            case '/': {num.push(n2/n1); break;}
+                        }
+                    }
+                    optchar.push(input[i]);
+                }
+            }
+            i = j + 1; opt = 1 - opt;
+        }
+        while (!optchar.empty()) {
+            char choice = optchar.top(); optchar.pop();
+            double n1 = num.top(); num.pop();
+            double n2 = num.top(); num.pop();
+            switch (choice) {
+                case '+': {num.push(n2+n1); break;}
+                case '-': {num.push(n2-n1); break;}
+                case '*': {num.push(n2*n1); break;}
+                case '/': {num.push(n2/n1); break;}
+            }
+        }
+        double result = num.top(); num.pop();
+        printf("%.2f\n", result);
+    }
+    return 0;
+}
